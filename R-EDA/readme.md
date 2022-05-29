@@ -1,5 +1,7 @@
 # ADVERT CLICK PROBABILITY FOR AN ENTREPRENEURS CAMPAIGNS
 
+### HERE'S THE LINK TO THE NOTEBOOK *https://rpubs.com/Ogaja/eda-ip*
+
 # a) Specifying the Question
 
 Which individuals are more likely to click on adverts on cryptography?
