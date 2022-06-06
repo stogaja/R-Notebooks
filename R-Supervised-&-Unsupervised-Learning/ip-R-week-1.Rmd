@@ -177,7 +177,7 @@ adverts_2 <- subset(adverts, adverts$`Area.Income`> (47032 - 1.5*income.IQR) & a
 
 #### let's see the shape of the new dataframe
 ```{r}
-dim(adverts_2)3
+dim(adverts_2)
 ```
 We have lost 9 observations that included the outliers. We proceed with analysis.
 
@@ -271,40 +271,128 @@ corr_ <- cor(num_cols)
 corrplot(corr_, method = 'color')
 ```
 
-## 3. Modelling
+## 4. Modelling
 
-### Decision Trees
+We will do logistic regression as the study requires a classification solution
 
-#### previewing the dataset
 ```{r}
-head(adverts_2)
+# let's split the data into training and test splits
+set.seed(100)
+# let's select only columns that are relevant to modeling
+cols = c('Daily.Time.Spent.on.Site', 'Age', 'Area.Income', 'Daily.Internet.Usage', 'Male', 'Clicked.on.Ad')
+advertising = select(adverts_2, all_of(cols))
+
+train_rows = createDataPartition(advertising$Clicked.on.Ad, p=0.8, list=FALSE)
+
+# training  dataset
+train = advertising[train_rows,]
+
+# test dataset
+test = advertising[-train_rows,]
+
+# lets create the  X and y variables
+X = train
+y = train$Clicked.on.Ad
 ```
 
-#### checking the columns names
+### a) Decsion Trees
+
 ```{r}
-head(num_cols)
+# let's install tree package
+#install.packages("tree")
 ```
 
-#### creating the relationship model
 
 
+```{r}
+# let's train the model
+require(tree)
+model_ <- tree(Clicked.on.Ad ~.,
+               data = train,
+               method = "ranger")
+model_
+```
+
+```{r}
+# let's make predictions
+y_pred_ <- predict(model_)
+head(y_pred_)
+```
+
+```{r}
+# let's find the confusion matrix and the accuracy scores of the model
+confusion_Matrix <- table(Actual = train$Clicked.on.Ad, predicted = y_pred_ > .5)
+confusion_Matrix
+```
+
+```{r}
+# let's find the accuracy
+(confusion_Matrix[[1,1]] + confusion_Matrix[[2,2]])/sum(confusion_Matrix)
+```
 
 
+The Decision Trees model gives an accuracy of 96%
 
 
+### b) Logistic Regression
+
+#### We will use the x and y set above
+```{r}
+# let's now train our model
+model <- glm(Clicked.on.Ad ~ .,
+             data = train,
+             family = "binomial")
+
+# let's see a summary of our model
+summary(model)
+```
+```{r}
+# let's make predictions
+y_pred <- predict(model)
+
+# let's run our test through the model
+b <- predict(model, test, type = "response")
+head(b)
+
+b <- predict(model, train, type = "response")
+head(b)
+```
+
+```{r}
+# let's validate the model
+matrix <- table(Actual_Value = train$Clicked.on.Ad, Predicted_Value = b > .5)
+matrix
+```
+
+```{r}
+# let's get our accuracy score
+(matrix[[1,1]] + matrix[[2,2]])/sum(matrix)
+```
+
+The model attains an accuracy of 97% on logistic regression
 
 
+## 5. Conclusion
+The logistic regression model having given an accuracy score of 97% is better than the SVM model performed first.
 
+## 6. RECOMMENDATIONS
 
+ a. The entrepreneur should focus on the older population as the correlation between age and advert clicks is slightly positive indicating that as age increases the more likely the clicks are made.
 
+b. The entreoreneur should focus on regions with bigger area coverage as those with a smaller area since the correlation between area income and advert clicks is negatively weak one indicating that as area income decreases the more likely the clicks are made and vice versa.
 
+c. She should focus on the regions with low daily internet usage because the correlation between the daily internet usage and clicks on ads is negative indicating that as internet use decreases the more likely the clicks will be made.
 
+## 7. Follow up Questions
 
-### {RECOMMENDATIONS}
-=====================
+### a) Did we have the right data?
 
-### a. The entrepreneur should focus on the older population as the correlation between age and advert clicks is slightly positive indicating that as age increases the more likely the clicks are made.
+Yes, the data we were provided with was correct and it fit the scope of the analysis
 
-### b. The entreoreneur should focus on regions with bigger area coverage as those with a smaller area since the correlation between area income and advert clicks is negatively weak one indicating that as area income decreases the more likely the clicks are made and vice versa.
+### b) Did we need any other data to answer questions?
 
-### c. She should focus on the regions with low daily internet usage because the correlation between the daily internet usage and clicks on ads is negative indicating that as internet use decreases the more likely the clicks will be made.
+Yes, availability of more data on customer behavior would have given us more insight and perhaps a more accurate model
+
+### c) Did we have the right Question?
+
+Yes we did, the main question married well with the data we were provided with.
