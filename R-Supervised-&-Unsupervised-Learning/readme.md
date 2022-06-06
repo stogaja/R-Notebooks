@@ -1,4 +1,4 @@
-<h1 style = "text-align: center" >Kira Plastinina<h1/>  
+<h1 style = "text-align: center" >Kira Plastinina</h1>  
 ## Introduction and background
 
 The analysis done below was done with an aim of studying the behavior and characteristics of the customers of the brand.
