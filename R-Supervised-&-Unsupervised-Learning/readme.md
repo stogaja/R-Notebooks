@@ -1,4 +1,5 @@
-# Kira Plastinina
+<h1 style = "text-align: center" >Kira Plastinina<h1/>  
+<h5 style = "text-align: center" >(The Brand)<h5/>         
 
 ## Introduction and 
 
