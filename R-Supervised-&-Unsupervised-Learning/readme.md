@@ -14,7 +14,6 @@ The analysis done below was done with an aim of studying the behavior and charac
         <li><a href="#experimental-design">Experimental Design</a></li>
         <li><a href="#sucess-criteria">Success Criteria</a></li>
         <li><a href="#dataset">Dataset</a></li>
-        <li><a href="#rpubs-publication">RPubs Publication</a></li>
       </ul>
     </li>
     <li>
