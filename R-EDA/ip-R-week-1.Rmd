@@ -1,0 +1,325 @@
+---
+title: "First Independent Project"
+author: "STEPHEN ODHIAMBO OGAJA"
+date: '2022-05-28'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r load-packages, include=FALSE}
+library(dplyr)
+library(magrittr)
+library(knitr)
+```
+
+
+
+
+# CRYPTOGRAPHY ADVERTISING
+
+## 1a). Defining the Question
+=============================
+
+###-->> Which individuals are more likely to click on adverts on cryptography?
+
+
+## b). Defining the Metric of Success
+
+###-->> The project will be considered a success when we can identify which individuals will click on the advert.
+
+
+## c). Understanding the Context
+
+###-->> A Kenyan entrepreneur has created an online cryptography course and would want to advertise it on her blog. She currently targets audiences originating from various countries. In the past, she ran ads to advertise a related course on the same blog and collected data in the process. She would now like to employ your services as a Data Science Consultant to help her identify which individuals are most likely to click on her ads.
+
+
+## d). Recording the Experimental Design
+
+###-->> (i) Find and deal with outliers, anomalies, and missing data within the dataset.
+        (ii) Perform  uni variate and bivariate analysis.
+        (iii) From your insights provide a conclusion and recommendation
+
+
+## e). Data Relevance
+
+###-->> The data is valid and has been provided by the entrepreneur, it was collected from the previous adverts.
+
+
+
+# 2. Reading the data
+=====================
+### let's import the dataset
+```{r}
+adverts <- read.csv("advertising.csv")
+```
+
+
+
+# 3. Checking the Data
+======================
+### let's preview the top 6 records of the dataset
+```{r}
+head(adverts)
+```
+
+
+
+### let's check the last 6 records of the dataset
+```{r}
+tail(adverts)
+```
+
+
+
+### let's see the shape of our dataset
+```{r}
+dim(adverts)
+```
+###-->> The dataframe has 1000 observations and 10 variables
+
+
+
+### let's see the data types of the variables
+```{r}
+str(adverts)
+```
+###-->> R stores the dataframe and views the variables as lists so to see the the various data types of this list we use the str function.
+
+
+
+### let's check for duplicates in the dataframe
+```{r}
+duplicates <- adverts[duplicated(adverts), ]
+duplicates
+```
+### -->> The dataframe does not contain duplicate values.
+
+
+
+### let's check for missing data in each column
+```{r}
+colSums(is.na(adverts))
+```
+###-->> The dataset's columns does not have missing data.
+
+
+
+### let's check for outliers in the dataset
+### selecting only numeric columns
+```{r}
+num_cols <- adverts[,unlist(lapply(adverts, is.numeric))]
+head(num_cols)
+```
+###-->> 6 columns are numerical in nature
+
+
+
+### let's check for outliers in the numerical columns using BOXPLOT
+```{r}
+boxplot(num_cols, notch = TRUE)
+```
+###-->> The Area.Income variable has outliers which will be imputed.
+
+
+
+### let's see the values which are outliers in the Area.Income variable
+```{r}
+boxplot.stats(adverts$Area.Income)$out
+```
+
+
+
+### let's check for outliers using Z-SCORES
+
+### The z-score indicates the number of standard deviations a given value deviates from the mean.
+```{r}
+z_scores <- as.data.frame(sapply(num_cols, function(num_cols) (abs(num_cols-mean(num_cols))/sd(num_cols))))
+head(z_scores)
+```
+###-->> We will drop values with a Z-Score of more than 3 or -3. They are the outliers
+
+
+
+### Removing the outliers
+```{r}
+no_outliers <- z_scores[!rowSums(z_scores>3), ]
+head(no_outliers)
+```
+
+
+
+### let's check the number of observations after removing outliers
+```{r}
+dim(num_cols)
+dim(no_outliers)
+```
+###-->> We removed 2 observations.
+
+
+
+### let's check for outliers in the new dataframe after removing them
+```{r}
+boxplot(no_outliers)
+```
+###-->> There are still outliers so we will use interquantile range method to remove outliers
+
+
+
+### checking and removing outliers using IQR
+### The Area.Income column had outliers so we focus on it
+```{r}
+income.IQR <- 65471-47032
+income.IQR <-IQR(adverts$`Area.Income`)
+income.IQR
+```
+
+
+
+
+### let's save the dataframe without outliers into a new dataframe by assigning it to a variable
+```{r}
+adverts_2 <- subset(adverts, adverts$`Area.Income`> (47032 - 1.5*income.IQR) & adverts$`Area.Income`<(65471 + 1.5*income.IQR))
+```
+
+
+
+
+### let's see the shape of the new dataframe
+```{r}
+dim(adverts_2)
+```
+###-->> We have lost 9 observations that included the outliers. We proceed with analysis.
+
+
+
+
+### 4. {UNIVARIATE ANALYSIS}
+============================
+
+### let's get the mean of the numerical columns
+```{r}
+summary(num_cols)
+```
+###-->> The summary shows:
+###-->> 1. The minimum value for each numerical variable.
+###-->> 2. The first quantile for each numerical variable
+###-->> 3. The median value for all numeric variables across the dataframe.
+###-->> 4. The mean value for all numeric variables.
+###-->> 5. The third quantile.
+###-->> 6. The maximum value for all numerical columns.
+
+
+
+
+### let's get the variance for the numeric variables
+```{r}
+variance <- var(num_cols)
+variance
+```
+###-->> variance is a measure of how far the set of data points per column is spread out from their mean eg. those of the area income seem to be far spread out from their mean when compared to that of the age column.
+
+
+
+
+### let's get the standard deviation of the numeric variables
+### let's create a function to get the standard deviations
+```{r}
+sd.function <- function(column) {
+  standard.deviations <- sd(column)
+  print(standard.deviations)
+} 
+```
+
+
+
+
+### standard deviation for daily time spent on site
+```{r}
+sd.function(adverts_2$Daily.Time.Spent.on.Site)
+```
+
+
+
+
+
+### standard deviation for Age
+```{r}
+sd.function(adverts_2$Age)
+```
+
+
+
+
+### standard deviation for Area.Income
+```{r}
+sd.function(adverts_2$Area.Income)
+```
+
+
+
+
+### standard deviation for Daily.Internet.Usage
+```{r}
+sd.function(adverts_2$Daily.Internet.Usage)
+```
+###-->> Where a low standard deviation indicates that values are closer to the mean a high one indicates the standard deviation is far from the mean e.g the age column standard deviation of 8.8 displays that its values are closer to their mean than that of the Area income column whose value is 12961
+
+
+
+
+### let's get the skewness of the numerical column
+```{r}
+library(moments)
+skewness(num_cols)
+```
+###-->> The skewness of the Age variable being positive indicates that its distribution has a longer right tail than left tail while the rest of the columns' left tails.
+
+
+
+
+### 5. {BIVARIATE ANALYSIS}
+===========================
+
+### let's get the covariance of the numeric variables
+```{r}
+cov(num_cols)
+```
+###-->> The age variable is the only column with a positive covariance with the ad click variable, the rest have negative covariances.
+
+
+
+
+### let's get the correlation coefficient
+```{r}
+cor(num_cols)
+```
+###-->> The variables have a negative correlation with the target variable apart from the age variable which has a positive correlation. Let's see that in the correlogram below
+
+
+
+
+### let's see the corrplot of the numeric variables
+```{r}
+library(corrplot)
+
+corr_ <- cor(num_cols)
+
+corrplot(corr_, method = 'color')
+```
+
+
+### {RECOMMENDATIONS}
+=====================
+
+### a. The entrepreneur should focus on the older population as the correlation between age and advert clicks is slightly positive indicating that as age increases the more likely the clicks are made.
+
+### b. The entreoreneur should focus on regions with bigger area coverage as those with a smaller area since the correlation between area income and advert clicks is negatively weak one indicating that as area income decreases the more likely the clicks are made and vice versa.
+
+### c. She should focus on the regions with low daily internet usage because the correlation between the daily internet usage and clicks on ads is negative indicating that as internet use decreases the more likely the clicks will be made.
