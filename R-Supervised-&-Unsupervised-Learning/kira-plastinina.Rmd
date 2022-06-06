@@ -2,7 +2,9 @@
 title: "Kira Plastinina Customer Analysis"
 author: "STEPHEN ODHIAMBO OGAJA"
 date: '2022-06-05'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -180,14 +182,13 @@ statistics <- round(desc_stats, 1)
 statistics
 boxplot(num_col, notch = TRUE)
 ```
-The Administrative, BounceRates and Browser columns have outliers but they will be retained for further 
+The Administrative, BounceRates and Browser columns have outliers but they will be retained for further analysis
 
 ## 5. Descriptive Analysis
 ```{r}
 # descriptive statistics
 describe(shop)
 ```
-### SUMMARY
 
 #### Month
 The website had the most visitors during the months of May, with 27.3% of total activity for the entire period and november which had 24.5% of all viisits.
@@ -317,7 +318,7 @@ pairs(num_col, pch = 19)
 ```
 
 
-### Correlation Coefficients
+### let's get the Correlation Coefficients
 ```{r}
 cor(num_col)
 ```
@@ -416,46 +417,27 @@ Using the revenue column for comparison, the model was able to match the revenue
 # let's calculate the distance
 
 ## methods to assess
-m <- c( "average", "single", "complete", "ward")
-names(m) <- c( "average", "single", "complete", "ward")
-
-library(cluster)
-library(purrr)
-
-library(factoextra)
+#m <- c( "average", "single", "complete", "ward")
+#names(m) <- c( "average", "single", "complete", "ward")
+#
+#library(cluster)
+#library(purrr)
+#
+#library(factoextra)
 # computing the coefficient with a function
-ac <- function(x) {
-    agnes(web_traffic, method = x)
-}
-
-map_dbl(m, ac)
+#ac <- function(x) {
+#    agnes(web_traffic, method = x)
+#}
+#
+#map_dbl(m, ac)
 ```
 
 ```{r}
-web_traffic
 # calculating distances between observations
 dist_euc <- dist(web_traffic, method = 'euclidean')
 
 # computing the manhattan distance between observarions
 dist_man <- dist(web_traffic, method = "manhattan")
-```
-
-```{r}
-#Eclidian distance
-hc.avg <- hclust(dist_euc, method = "ward.D2")
-hcd <- as.dendrogram(hc.avg)
-
-
-par(mfrow=c(1,1))
-
-plot(hcd, main="Main",horiz=T)
-
-plot(cut(hcd, h=30)$upper, 
-     main="Upper tree of cut at h=100",horiz=T)
-plot(cut(hcd, h=30)$lower[[2]], 
-     main="Second branch of lower tree with cut at h=75",horiz=T)
-rect.hclust(hcd , k = 2, border = 2:6)
-abline(h = 2, col = 'red')
 ```
 
 
