@@ -1,9 +1,7 @@
 <h1 style = "text-align: center" >Kira Plastinina<h1/>  
-<h5 style = "text-align: center" >(The Brand)<h5/>         
+## Introduction and background
 
-## Introduction and 
-
-The project described below was done with an aim of identifying users who were most likely to click on a course ad, displayed on the client's blog.
+The analysis done below was done with an aim of studying the behavior and characteristics of the customers of the brand.
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -36,14 +34,11 @@ The project described below was done with an aim of identifying users who were m
 
 ## Project Description
 
-![alt text](https://davehortonads.com/wp-content/uploads/2020/01/targeted-advertising.jpg)
+![alt text](https://i.industry-fashion.com/images/013/image-38023.jpg)
 
-A targeted ad, in online marketing, is an advertisement that is directed towards an audience of a specific demograhic, and/or with certain traits, based on the product the advertiser is promoting.
+Kira Plastinina is a Russian fashion designer and entrepreneur. Her brand was sold through a now defunct chain of eponymous retail stores in Russia, Ukraine, Kazakhstan, Belarus, China, Philippines and Armenia.
 
-For this project a Kenyan entrepreneur had created an online cryptography course and wanted to advertise it on her blog. She targeted audiences originating from all continents in various countries. She had provieded data from a previous related course, whose ads were ran on the same blog. Insights on users likely to click on the ads was to be derived from the data, and was to be used to improve the advertising strategy for the new course, to ensure a high ROI was achived.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+The brand’s Sales and Marketing team would like to understand their customer’s behavior from data that they have collected over the past year. More specifically, they would like to learn the characteristics of customer groups.
 <!-- EXPERIMENTAL DESIGN -->
 
 ### Experimental Design
@@ -65,21 +60,13 @@ For this project a Kenyan entrepreneur had created an online cryptography course
 
 ### Success Criteria
 
-Correct identification of fundamental characteristics of users who had previously clicked on the previous course ad.
+The success criteria for this project was to succesfully study and learn customer behavior and characteristics through the use of data provided.
 
 <!-- DATASET -->
 
 ### Dataset
 
-The dataset avialed by the client can be downloaded from this [link](http://bit.ly/IPAdvertisingData).
-
-<!-- RPUBS PUBLICATION -->
-
-### RPubs Publication
-
-The final project was published in [RPubs](http://rpubs.com/deborah_masibo/908054).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+The dataset avialed by the client can be downloaded from this [link](http://bit.ly/EcommerceCustomersDataset').
 
 <!-- TECHNOLOGIES USED -->
 
@@ -94,8 +81,6 @@ The languages/IDEs used in the analysis project were:
 **IDE**
 
 [RStudio](https://www.rstudio.com/)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -114,8 +99,6 @@ Steps to be takes to run the project locally.
 2. Download and install [RStudio](https://www.rstudio.com/products/rstudio/download/).
 3. Refer to the [RPubs publication](http://rpubs.com/deborah_masibo/908054).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- USAGE EXAMPLES -->
 
 ## Usage
@@ -123,25 +106,8 @@ Steps to be takes to run the project locally.
 1. The project has been written entirely in R, for beginners, refer to the [docummentation](https://www.rdocumentation.org/) for a better understanding of the code.
 2. Details on the project context and analysis can be found in the RPubs pulication.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- LICENSE -->
 
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-List of helpful resources.
-
-- [R Docummentation](https://www.rdocumentation.org/)
-- [Tutorialspoint](https://www.tutorialspoint.com/r/index.htm)
-- [Statistics Globe](https://statisticsglobe.com/r-programming-language)
-- [Statistical tools for high-throughput data analysis](http://www.sthda.com/english/wiki/ggplot2-essentials)
-- [ggplot2](https://ggplot2.tidyverse.org/)
-<p align="right">(<a href="#top">back to top</a>)</p>
