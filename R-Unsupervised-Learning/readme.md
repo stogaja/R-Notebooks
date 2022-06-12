@@ -41,13 +41,13 @@ Carrefour is a French multinational retail corporation headquartered in Massy, F
 In Kenya, Carrefour has 8 outlets mostly located in the suburbs of Kenya’s capital city, Nairobi. The retailer’s expansion into Kenya has benefited from the failure of previously-dominant supermarket chains such as Nakumatt and Uchumi as Carrefour rushed in to occupy the retail spaces and market share they vacated.
 
 ### PCA and Feature Selection
-Correct identification of the most important variables from the data set was important as this could reduce the amount of factors to be considered during decision making and planning, to only the most relevant factors.
+Here we will focus on correct identification of the most important variables from the data set was important as this could reduce the amount of factors to be considered during decision making and planning, to only the most relevant factors.
 
 ### Association Rules
-The insights derived from analysis of association rules were important for planning stocking, advertisements, and promotions (to boost sales). Therefore, highly accurate information was required to prevent incurring losses as a result of remaing with a larger than expected closing stock, especially perishable goods.
+Inferences from analysis of association rules were important for planning stocking, advertisements, and promotions. Therefore, highly accurate information is required to prevent incurring losses as a result of remaing with a larger than expected closing stock, especially perishable goods.
 
 ### Anomaly Detection
-Correct detection of anomalies was of importance as under reporting of sales is a crime, as less taxes will be filed. Plus, this activity, as well as over reporting of sales could have lead to incorrect restocking of goods, leading to product shortages, or over stocking respectively. This could have lead to heavy losses being incurred, or a great sales opportunity being missed (limited supply of goods in demand).
+Anomaly detection is of importance as under reporting of sales is a crime, as less taxes will be filed. Plus, this activity, as well as over reporting of sales could have lead to incorrect restocking of goods, leading to product shortages, or over stocking respectively. This could have lead to heavy losses being incurred, or a great sales opportunity being missed (limited supply of goods in demand).
 
 
 
